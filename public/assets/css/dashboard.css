@@ -1,0 +1,105 @@
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
+  right: 0;
+  */
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+
+}
+
+#botao_logout {
+    display: block;
+}
+
+@media screen and (max-width: 767.98px) {
+    #botao_logout {
+        margin-right: 50px;
+    }
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    margin-bottom: 15px;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+}
+
+
+.sidebar .nav-link.active {
+    color: #fff;
+    font-weight: 600;
+    background-color: #4e73df !important;
+
+}
+
+
+.sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+    color: #fff;
+    font-weight: 600;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 20px;
+    background-color: #4e73df;
+}
+.navbar-brand:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav_top {
+    background-color: #4e73df;
+}
+
+.navbar .navbar-toggler {
+    border: 0.5px solid #fff;
+    top: 1.25rem;
+    right: 1rem;
+    color: #fff;
+}
+.navbar .navbar-toggler:focus {
+    box-shadow: none;
+    border: 2px solid #fff;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+#sidebarMenu{
+    background-color: #07112c  !important;
+}
+
+.icons_dash{
+    font-size: 18px;
+}
