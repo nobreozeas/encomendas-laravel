@@ -1,12 +1,13 @@
 
 @extends('layout.app')
-@section('titulo_pagina', 'Encomendas')
+
 @section('content')
-    <div class="row mb-3">
-        <div class="col d-flex justify-content-end">
-            <a href="{{route('encomendas.adicionar')}}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
-        </div>
-    </div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Encomendas</h1>
+    <a href="{{route('encomendas.adicionar')}}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
+</div>
+
     <div class="row">
         <div class="col">
             <div class="card">
