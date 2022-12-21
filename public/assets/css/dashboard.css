@@ -103,3 +103,52 @@
 .icons_dash{
     font-size: 18px;
 }
+
+.box_form{
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 8px 1px 8px 2px #ccc;
+    padding: 10px;
+    border-left: #4e73df 5px solid;
+    border-radius: 8px;
+}
+.fase_form{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.fase_form i{
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+    color: #fff;
+}
+
+.ps {
+    margin-top: 10px;
+    width: 200px;
+    height: 10px;
+    background-color: gray;
+
+}
+
+.circle{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-top: -10px;
+
+}
+
+.circle.active{
+    background-color: #4e73df;
+    color: #fff;
+}
+
+.circle.active i{
+    color: #fff;
+}
+
+
