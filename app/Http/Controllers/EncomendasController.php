@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class EncomendasController extends Controller
@@ -44,6 +45,29 @@ class EncomendasController extends Controller
 
     public function create()
     {
-        return view('encomendas.adicionar');
+        $clientes = Cliente::all();
+        return view('encomendas.adicionar', compact('clientes'));
     }
+
+    public function buscaCliente(Request $request)
+    {
+
+        $cliente = Cliente::findOrFail($request->cliente)->first();
+
+
+        if(!$cliente){
+            return response()->json([
+                'message' => 'Cliente não encontrado'
+            ], 404);
+        }else{
+            return response()->json([
+                'cliente' => $cliente
+            ], 200);
+        }
+
+
+
+
+    }
+
 }

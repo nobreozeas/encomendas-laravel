@@ -105,7 +105,7 @@
 }
 
 .box_form{
-    min-height: 100px;
+    height: 100%;
     background: #fff;
     box-shadow: 8px 1px 8px 2px #ccc;
     padding: 10px;
@@ -119,16 +119,22 @@
     margin-bottom: 10px;
 }
 .fase_form i{
-    margin-top: 10px;
+    margin-top: 12px;
     margin-left: 10px;
     font-size: 25px;
     color: #fff;
 }
+#ip1{
+    margin-left: 14px;
+}
+#ip4{
+    margin-left: 11px;
+}
 
 .ps {
-    margin-top: 10px;
+    margin-top: 14px;
     width: 200px;
-    height: 10px;
+    height: 4px;
     background-color: gray;
 
 }
@@ -150,5 +156,6 @@
 .circle.active i{
     color: #fff;
 }
+
 
 
