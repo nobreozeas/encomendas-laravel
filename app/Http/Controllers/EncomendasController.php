@@ -45,13 +45,28 @@ class EncomendasController extends Controller
 
     public function create()
     {
-        return view('encomendas.adicionar');
+        $clientes = Cliente::all();
+        return view('encomendas.adicionar', compact('clientes'));
     }
 
     public function buscaCliente(Request $request)
     {
 
-        $cliente = Cliente::where('id', $request->id)->first();
+        $cliente = Cliente::findOrFail($request->cliente)->first();
+
+
+        if(!$cliente){
+            return response()->json([
+                'message' => 'Cliente não encontrado'
+            ], 404);
+        }else{
+            return response()->json([
+                'cliente' => $cliente
+            ], 200);
+        }
+
+
+
 
     }
 

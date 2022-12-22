@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.home');
 Route::get('/encomendas', [EncomendasController::class, 'index'])->name('encomendas.index');
 Route::get('/encomendas/adicionar', [EncomendasController::class, 'create'])->name('encomendas.adicionar');
+Route::post('/encomendas/buscar-cliente', [EncomendasController::class, 'buscaCliente'])->name('buscar_cliente');

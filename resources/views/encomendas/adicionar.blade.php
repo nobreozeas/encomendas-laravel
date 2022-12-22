@@ -26,29 +26,45 @@
         <div class="col mt-3">
             <form class="row g-3">
                 <div id="input_cliente" class="box_form">
-                    <label for="" class="form-label">Tipo de Cliente</label>
-                    <div class="col-md-12 mt-0">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipo_cliente" id="cliente_cadastrado"
-                                value="1">
-                            <label class="form-check-label" for="cliente_cadastrado">Cliente Cadastrado</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipo_cliente" id="cliente_avulso"
-                                value="2">
-                            <label class="form-check-label" for="cliente_avulso">Cliente Avulso</label>
+
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><i class="fa-regular fa-magnifying-glass me-2"></i>Pesquisar
+                            Cliente</button>
+                    </div>
+
+                    <!--  modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pesquisar Cliente</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 mt-2 mb-3">
+                                        <select id="cliente" name="cliente" class="form-select select-2">
+                                            <option value="" selected>Selecione...</option>
+                                            @foreach ($clientes as $cliente)
+                                                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="btn_busca_cliente"
+                                        data-bs-dismiss="modal">Aplicar</button>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="formulario_cliente">
-                        <div class="col-md-12 mt-2">
-                            <label for="cliente" class="form-label">Cliente</label>
-                            <select id="cliente" name="cliente" class="form-select select-2">
-                                <option value="" selected>Selecione...</option>
-                                <option value="joao">Joao</option>
-                            </select>
-                        </div>
-                    </div>
+
+                    <!-- fim  modal -->
+
 
                     <div id="formulario_avulso">
                         <div class="row g-3">
@@ -60,8 +76,8 @@
                                 <label for="tp_doc" class="form-label">Tipo de documento</label>
                                 <select id="tp_doc" class="form-select" name="tp_doc_remetente">
                                     <option value="" selected>Selecione...</option>
-                                    <option value="1">CPF</option>
-                                    <option value="2">CNPJ</option>
+                                    <option value="CPF">CPF</option>
+                                    <option value="CNPJ">CNPJ</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -99,7 +115,16 @@
                 </div>
 
                 <div id="input_destinatario" class="box_form">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal2"><i
+                                    class="fa-regular fa-magnifying-glass me-2"></i>Pesquisar
+                                Cliente</button>
+                        </div>
+                    </div>
                     <div class="row g-3">
+
                         <div class="col-md-6">
                             <label for="nome_destinatario" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="nome_destinatario" name="nome_destinatario">
@@ -108,8 +133,8 @@
                             <label for="tp_doc_destinatario" class="form-label">Tipo de documento</label>
                             <select id="tp_doc_destinatario" class="form-select">
                                 <option value="" selected>Selecione...</option>
-                                <option value="1">CPF</option>
-                                <option value="2">CNPJ</option>
+                                <option value="CPF">CPF</option>
+                                <option value="CNPJ">CNPJ</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -138,6 +163,40 @@
 
                     </div>
                 </div>
+
+
+                <!--  modal -->
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Pesquisar Cliente</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12 mt-2 mb-3">
+                                    <select id="cliente2" name="cliente" class="form-select select-2">
+                                        <option value="" selected>Selecione...</option>
+                                        @foreach ($clientes as $cliente)
+                                            <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="btn_busca_cliente"
+                                    data-bs-dismiss="modal">Aplicar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- fim  modal -->
+
 
                 <div id="input_encomenda" class="box_form">
                     <div class="row g-3">
@@ -174,7 +233,7 @@
 
                 <div id="input_frete" class="box_form">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="forma_pagamento" class="form-label">Forma de Pagamento</label>
                             <select id="forma_pagamento" class="form-select">
                                 <option value="" selected>Selecione...</option>
@@ -185,10 +244,17 @@
                                 <option value="5">Pix</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="valor_pago" class="form-label">Valor Pago</label>
                             <input type="text" class="form-control" id="valor_pago">
                         </div>
+                        <div class="col-md-4">
+                            <label for="tp_faturamento" class="form-label">Faturamento</label>
+                            <select id="tp_faturamento" class="form-select">
+                                <option value="" selected>Selecione...</option>
+                                <option value="1">À Vista</option>
+                                <option value="2">À Prazo</option>
+                            </select>
 
                         <div class="col_btns col-12 d-flex justify-content-end align-items-end mt-2">
                             <button type="button" class="btn btn-secondary me-2" id="btn_v4"><i
@@ -208,10 +274,62 @@
     </div>
 
     <script>
+
         $(document).ready(function() {
 
-            //ocultar primeiro botao de proximo
-            $('#btn_p1').hide();
+            $('#cliente').on('change', function() {
+
+                if ($('#cliente').val() != '') {
+                    var cliente = $('#cliente').val();
+                    $.ajax({
+                        url: "{{ route('buscar_cliente') }}",
+                        type: 'POST',
+                        data: {
+                            cliente: cliente
+                        },
+                        success: function(data) {
+                            console.log(data);
+
+                            $('#nome').val(data.cliente.nome);
+                            $('#telefone').val(data.cliente.telefone).mask(SPMaskBehavior,
+                                spOptions);
+                            $('#email').val(data.cliente.email);
+                            $('#tp_doc').val(data.cliente.tp_documento).change();
+                            $('#documento').val(data.cliente.documento).mask(cpfCnpj, cpfOptions) ;
+
+
+
+                        }
+                    });
+                }
+            });
+
+            $('#cliente2').on('change', function() {
+
+                if ($('#cliente2').val() != '') {
+                    var cliente = $('#cliente').val();
+                    $.ajax({
+                        url: "{{ route('buscar_cliente') }}",
+                        type: 'POST',
+                        data: {
+                            cliente: cliente
+                        },
+                        success: function(data) {
+                            console.log(data);
+
+                            $('#nome_destinatario').val(data.cliente.nome);
+                            $('#telefone_destinatario').val(data.cliente.telefone).mask(
+                                SPMaskBehavior,
+                                spOptions);
+                            $('#tp_doc_destinatario').val(data.cliente.tp_documento).change();
+                            $('#documento_destinatario').val(data.cliente.documento).mask(cpfCnpj, cpfOptions);
+
+
+
+                        }
+                    });
+                }
+            });
 
 
             //ocultando inputs
@@ -259,63 +377,27 @@
                 $('#input_encomenda').show();
             });
 
-            $('#formulario_avulso').hide();
-            $('#formulario_cliente').hide();
-            $('.origem').hide();
+            $('body').on('change', '#origem, #nome, #tp_doc, #documento, #telefone', function() {
+
+                if ($('#nome').val() != '' && $('#tp_doc').val() != '' && $('#documento')
+                    .val() != '' && $('#telefone').val() != '' && $('#origem').val() != ''
+                ) {
+                    $('#btn_p1').prop('disabled', false);
 
 
-            $('input[type=radio][name=tipo_cliente]').change(function() {
-                if (this.value == '1') {
-
-                    $('body').on('change', '#cliente, #origem', function() {
-                        if ($(this).val() != '' && $('#origem').val() != '') {
-                            $('#btn_p1').prop('disabled', false);
-                        } else {
-                            $('#btn_p1').prop('disabled', true);
-                        }
-                    });
-
-                    $('#formulario_avulso').hide();
-                    $('#formulario_cliente').show();
-                    $('#main_form').show();
-                    $('#btn_add_encomenda').show()
-                    $('.origem').show();
-                    $('#btn_p1').show();
+                } else {
                     $('#btn_p1').prop('disabled', true);
-
-
-                    //tornar valor dos inputs vazios
-                    $('#nome').val('');
-                    $('#tp_doc').val('');
-                    $('#documento').val('');
-                    $('#telefone').val('');
-                    $('#email').val('');
-                    $('#origem').val('').change();
-                } else if (this.value == '2') {
-                    $('body').on('change', '#origem, #nome, #tp_doc, #documento, #telefone', function() {
-
-                        if ($('#nome').val() != '' && $('#tp_doc').val() != '' && $('#documento')
-                            .val() != '' && $('#telefone').val() != '' && $('#origem').val() != ''
-                        ) {
-                            $('#btn_p1').prop('disabled', false);
-
-
-                        } else {
-                            $('#btn_p1').prop('disabled', true);
-                        }
-                    });
-
-                    $('#formulario_cliente').hide();
-                    $('#formulario_avulso').show();
-                    $('#main_form').show();
-                    $('#btn_add_encomenda').show()
-                    $('.origem').show();
-                    $('#btn_p1').show();
-                    $('#btn_p1').prop('disabled', true);
-                    $('#cliente').val('').change();
-                    $('#origem').val('').change();
                 }
             });
+
+            $('#btn_add_encomenda').show()
+            $('.origem').show();
+            $('#btn_p1').show();
+            $('#btn_p1').prop('disabled', true);
+            $('#cliente').val('').change();
+            $('#origem').val('').change();
+
+
 
             var SPMaskBehavior = function(val) {
                     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
@@ -326,20 +408,21 @@
                     }
                 };
             $('#telefone, #telefone_destinatario').mask(SPMaskBehavior, spOptions);
-            $('#valor_pago').mask('#.##0,00', {
-                reverse: true
-            });
-            $('.select-2, #origem, #destino, #unidade, #forma_pagamento').select2({
+            $('#valor_pago').mask(
+                '#.##0,00', {
+                    reverse: true
+                });
+            $('.select-2, #origem, #destino, #unidade, #forma_pagamento, #tp_faturamento').select2({
                 language: "pt-BR",
                 theme: "bootstrap-5"
             });
 
             $('#tp_doc').on('change', function() {
-                if (this.value == '1') {
+                if (this.value == 'CPF') {
                     $('#documento').mask('000.000.000-00', {
                         reverse: true
                     });
-                } else if (this.value == '2') {
+                } else if (this.value == 'CNPJ') {
                     $('#documento').mask('00.000.000/0000-00', {
                         reverse: true
                     });
@@ -347,11 +430,11 @@
             });
 
             $('#tp_doc_destinatario').on('change', function() {
-                if (this.value == '1') {
+                if (this.value == 'CPF') {
                     $('#documento_destinatario').mask('000.000.000-00', {
                         reverse: true
                     });
-                } else if (this.value == '2') {
+                } else if (this.value == 'CNPJ') {
                     $('#documento_destinatario').mask('00.000.000/0000-00', {
                         reverse: true
                     });
@@ -364,7 +447,9 @@
                 '#nome_destinatario, #tp_doc_destinatario, #documento_destinatario, #telefone_destinatario, #destino',
                 function() {
                     if ($('#nome_destinatario').val() != '' && $('#tp_doc_destinatario').val() != '' && $(
-                            '#documento_destinatario').val() != '' && $('#telefone_destinatario').val() != '' && $('#destino').val() != '') {
+                            '#documento_destinatario').val() != '' && $('#telefone_destinatario').val() != '' &&
+                        $(
+                            '#destino').val() != '') {
                         $('#btn_p2').prop('disabled', false);
                     } else {
                         $('#btn_p2').prop('disabled', true);
@@ -373,24 +458,36 @@
 
             //passo 4 - validando inputs de encomenda
             $('#btn_p3').prop('disabled', true);
-            $('body').on('change', '#unidade, #descricao_encomenda, #quantidade', function() {
-                if ($('#unidade').val() != '' && $('#descricao_encomenda').val() != '' && $('#quantidade').val() !=
-                    '') {
-                    $('#btn_p3').prop('disabled', false);
-                } else {
-                    $('#btn_p3').prop('disabled', true);
-                }
-            });
+            $('body').on('change', '#unidade, #descricao_encomenda, #quantidade',
+                function() {
+                    if ($('#unidade').val() != '' && $('#descricao_encomenda').val() != '' && $('#quantidade')
+                        .val() !=
+                        '') {
+                        $('#btn_p3').prop('disabled', false);
+                    } else {
+                        $('#btn_p3').prop('disabled', true);
+                    }
+                });
 
             //passo 5 - validando inputs de pagamento
             $('#btn_add_encomenda').prop('disabled', true);
-            $('body').on('change', '#forma_pagamento, #valor_pago', function() {
-                if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '') {
-                    $('#btn_add_encomenda').prop('disabled', false);
-                } else {
-                    $('#btn_add_encomenda').prop('disabled', true);
-                }
-            });
+            $('body').on('change', '#forma_pagamento, #valor_pago, #tp_faturamento',
+                function() {
+                    if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '' && $('#tp_faturamento') != '') {
+                        $('#btn_add_encomenda').prop('disabled', false);
+                    } else {
+                        $('#btn_add_encomenda').prop('disabled', true);
+                    }
+                });
+
+                var cpfCnpj = function(val) {
+                    return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0000-00';
+                },
+                cpfOptions = {
+                    onKeyPress: function(val, e, field, options) {
+                        field.mask(cpfCnpj.apply({}, arguments), options);
+                    }
+                };
 
 
 
