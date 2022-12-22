@@ -16,6 +16,7 @@
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{asset('assets/js/jquery.mask.js')}}"></script>
 
     <style>
         .bd-placeholder-img {

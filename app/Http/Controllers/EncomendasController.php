@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class EncomendasController extends Controller
@@ -46,4 +47,12 @@ class EncomendasController extends Controller
     {
         return view('encomendas.adicionar');
     }
+
+    public function buscaCliente(Request $request)
+    {
+
+        $cliente = Cliente::where('id', $request->id)->first();
+
+    }
+
 }
