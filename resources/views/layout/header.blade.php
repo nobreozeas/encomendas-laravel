@@ -13,11 +13,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}" />
     @stack('styles')
 
+
+
     <script src="{{ asset('assets/js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
     <script src="{{asset('assets/js/jquery.mask.js')}}"></script>
+    <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
     @stack('scripts')
 
     <script>

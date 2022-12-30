@@ -3,50 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Destinatario;
+use App\Models\Encomenda;
+use App\Models\FormaPagamento;
+use App\Models\Municipio;
+use App\Models\Remetente;
+use App\Models\TipoFaturamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Termwind\Components\Dd;
+use App\Helpers\Helper;
+use PDF;
 
 class EncomendasController extends Controller
 {
     public function index()
     {
 
-
-        $encomendas = [
-            [
-                'id' => 1,
-                'cliente' => 'João',
-                'agencia' => 'Agência 1',
-                'estado' => 'Pendente',
-                'valor' => '1000',
-                'data' => '2021-01-01',
-            ],
-            [
-                'id' => 2,
-                'cliente' => 'Maria',
-                'agencia' => 'Agência 2',
-                'estado' => 'Pendente',
-                'valor' => '2000',
-                'data' => '2021-01-01',
-            ],
-            [
-                'id' => 3,
-                'cliente' => 'José',
-                'agencia' => 'Agência 3',
-                'estado' => 'Pendente',
-                'valor' => '3000',
-                'data' => '2021-01-01',
-            ]
-        ];
-
-       $encomendas =  (object) $encomendas;
-
-        return view('encomendas.index', compact('encomendas'));
+        return view('encomendas.index');
     }
 
     public function create()
     {
+        $formas_pagamentos = FormaPagamento::all();
+        $tp_faturamentos = TipoFaturamento::all();
         $clientes = Cliente::all();
-        return view('encomendas.adicionar', compact('clientes'));
+        $municipios = Municipio::all();
+        return view('encomendas.adicionar', compact('clientes', 'municipios', 'formas_pagamentos', 'tp_faturamentos'));
     }
 
     public function buscaCliente(Request $request)
@@ -55,19 +38,98 @@ class EncomendasController extends Controller
         $cliente = Cliente::findOrFail($request->cliente)->first();
 
 
-        if(!$cliente){
+        if (!$cliente) {
             return response()->json([
                 'message' => 'Cliente não encontrado'
             ], 404);
-        }else{
+        } else {
             return response()->json([
                 'cliente' => $cliente
             ], 200);
         }
+    }
 
 
+    public function store(Request $request)
+    {
+
+
+
+        try {
+
+            DB::beginTransaction();
+            $valor = str_replace(',', '.', str_replace('.', '', $request->valor_pago));
+            $codigo = rand(1000000000, 9999999999);
+            $cliente = Cliente::where('documento', $request->documento)->first();
+            if ($cliente) {
+                $remetente = Remetente::create([
+                    'id_cliente' => $cliente->id ?? null,
+                    'nome' => $request->nome,
+                    'telefone' => $request->telefone,
+                    'email' => $request->email_remetente ?? null,
+                    'tp_documento' => $request->tp_doc,
+                    'documento' => $request->documento,
+                ]);
+            } else {
+                $remetente = Remetente::create([
+                    'nome' => $request->nome,
+                    'telefone' => $request->telefone,
+                    'email' => $request->email ?? null,
+                    'tp_documento' => $request->tp_doc,
+                    'documento' => $request->documento,
+                ]);
+            }
+            $destinatario = Destinatario::create([
+                'nome' => $request->nome_destinatario,
+                'telefone' => $request->telefone_destinatario,
+                'tp_documento' => $request->tp_doc_destinatario,
+                'documento' => $request->documento_destinatario,
+            ]);
+            $encomenda = Encomenda::create([
+                'id_remetente' => $remetente->id,
+                'id_destinatario' => $destinatario->id,
+                'id_origem' => $request->origem,
+                'id_destino' => $request->destino,
+                'id_tp_pagamento' => $request->forma_pagamento,
+                'id_tp_faturamento' => $request->tp_faturamento,
+                'descricao' => $request->descricao_encomenda,
+                'quantidade' => $request->quantidade,
+                'valor' => $valor,
+                'status' => 1,
+                'unidade' => $request->unidade,
+                'observacao' => $request->observacao ?? null,
+                'codigo_rastreio' => $codigo,
+            ]);
+
+
+
+            DB::commit();
+
+            return response()->json([
+                'encomenda' => $encomenda,
+                'message' => 'Encomenda criada com sucesso'
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function imprimir($id)
+    {
+        //imprimir
+        $encomenda = Encomenda::findOrFail($id);
+
+        $pdf = PDF::loadView('encomendas.imprimir', compact('encomenda'));
+        PDF::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        return $pdf->setPaper('a4', 'portrait')->stream('comprovante.pdf');
 
 
     }
+
+
+
 
 }

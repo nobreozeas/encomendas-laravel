@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Agencia extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes';
+    protected $table = 'agencias';
 
     protected $fillable = [
-       'nome',
-       'tp_documento',
-        'documento',
+        'nome',
         'id_municipio',
         'endereco',
         'bairro',
         'cep',
-
     ];
 
 

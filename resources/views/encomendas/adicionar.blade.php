@@ -70,11 +70,11 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="nome_remetente" id="nome">
+                                <input type="text" class="form-control" name="nome" id="nome">
                             </div>
                             <div class="col-md-3">
                                 <label for="tp_doc" class="form-label">Tipo de documento</label>
-                                <select id="tp_doc" class="form-select" name="tp_doc_remetente">
+                                <select id="tp_doc" class="form-select" name="tp_doc">
                                     <option value="" selected>Selecione...</option>
                                     <option value="CPF">CPF</option>
                                     <option value="CNPJ">CNPJ</option>
@@ -82,15 +82,15 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="documento" class="form-label">Documento</label>
-                                <input type="text" class="form-control" id="documento" name="documento_remetente">
+                                <input type="text" class="form-control" id="documento" name="documento">
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email_remetente">
+                                <input type="email" class="form-control" id="email" name="email">
                             </div>
                             <div class="col-md-6">
                                 <label for="telefone" class="form-label">Telefone</label>
-                                <input type="text" class="form-control" id="telefone" name="telefone_remetente">
+                                <input type="text" class="form-control" id="telefone" name="telefone">
                             </div>
 
                         </div>
@@ -100,7 +100,9 @@
                             <label for="origem" class="form-label">Origem</label>
                             <select id="origem" class="form-select" name="origem">
                                 <option value="" selected>Selecione...</option>
-                                <option value="placido">Placido</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->id }}">{{ $municipio->nome }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -131,7 +133,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="tp_doc_destinatario" class="form-label">Tipo de documento</label>
-                            <select id="tp_doc_destinatario" class="form-select">
+                            <select id="tp_doc_destinatario" class="form-select" name="tp_doc_destinatario">
                                 <option value="" selected>Selecione...</option>
                                 <option value="CPF">CPF</option>
                                 <option value="CNPJ">CNPJ</option>
@@ -139,19 +141,23 @@
                         </div>
                         <div class="col-md-3">
                             <label for="documento_destinatario" class="form-label">Documento</label>
-                            <input type="text" class="form-control" id="documento_destinatario">
+                            <input type="text" class="form-control" id="documento_destinatario"
+                                name="documento_destinatario">
                         </div>
 
                         <div class="col-md-6">
                             <label for="telefone_destinatario" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" id="telefone_destinatario">
+                            <input type="text" class="form-control" id="telefone_destinatario"
+                                name="telefone_destinatario">
                         </div>
 
                         <div class="col-md-6 ">
                             <label for="destino" class="form-label">Destino</label>
-                            <select id="destino" class="form-select" required>
+                            <select id="destino" class="form-select" name="destino">
                                 <option value="" selected>Selecione...</option>
-                                <option value="rio branco">Rio Branco</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->id }}">{{ $municipio->nome }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col_btns col-12 d-flex justify-content-end mt-2">
@@ -202,25 +208,25 @@
                     <div class="row g-3">
                         <div class="col-md-12">
                             <label for="descricao_encomenda" class="form-label">Descrição</label>
-                            <input type="text" class="form-control" id="descricao_encomenda">
+                            <input type="text" class="form-control" id="descricao_encomenda" name="descricao">
                         </div>
 
                         <div class="col-md-6">
                             <label for="unidade" class="form-label">Unidade</label>
-                            <select id="unidade" class="form-select">
+                            <select id="unidade" class="form-select" name="unidade">
                                 <option value="" selected>Selecione...</option>
-                                <option value="1">Unidade</option>
-                                <option value="2">Kg</option>
-                                <option value="3">Metros</option>
+                                <option value="unidade">Unidade</option>
+                                <option value="kg">Kg</option>
+                                <option value="metro">Metro</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="quantidade" class="form-label">Quantidade</label>
-                            <input type="number" class="form-control" id="quantidade">
+                            <input type="text" class="form-control" id="quantidade" name="quantidade">
                         </div>
                         <div class="col-md-12">
                             <label for="observacao" class="form-label">Observação</label>
-                            <textarea class="form-control" id="observacao" rows="3"></textarea>
+                            <textarea class="form-control" id="observacao" rows="3" name="observacao"></textarea>
                         </div>
                         <div class="col_btns col-12 d-flex justify-content-end mt-2">
                             <button type="button" class="btn btn-secondary me-2" id="btn_v3"><i
@@ -235,38 +241,39 @@
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="forma_pagamento" class="form-label">Forma de Pagamento</label>
-                            <select id="forma_pagamento" class="form-select">
+                            <select id="forma_pagamento" class="form-select" name="forma_pagamento">
                                 <option value="" selected>Selecione...</option>
-                                <option value="1">Dinheiro</option>
-                                <option value="2">Cartão de Crédito</option>
-                                <option value="3">Cartão de Débito</option>
-                                <option value="4">Transferência</option>
-                                <option value="5">Pix</option>
+                                @foreach ($formas_pagamentos as $forma_pagamento)
+                                    <option value="{{ $forma_pagamento->id }}">
+                                        {{ $forma_pagamento->descricao }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label for="valor_pago" class="form-label">Valor Pago</label>
-                            <input type="text" class="form-control" id="valor_pago">
+                            <label for="valor_pago" class="form-label">Frete</label>
+                            <input type="text" class="form-control" id="valor_pago" name="valor_pago">
                         </div>
                         <div class="col-md-4">
                             <label for="tp_faturamento" class="form-label">Faturamento</label>
-                            <select id="tp_faturamento" class="form-select">
+                            <select id="tp_faturamento" class="form-select" name="tp_faturamento">
                                 <option value="" selected>Selecione...</option>
-                                <option value="1">À Vista</option>
-                                <option value="2">À Prazo</option>
+                                @foreach ($tp_faturamentos as $tp_faturamento)
+                                    <option value="{{ $tp_faturamento->id }}">{{ $tp_faturamento->descricao }}
+                                    </option>
+                                @endforeach
                             </select>
 
-                        <div class="col_btns col-12 d-flex justify-content-end align-items-end mt-2">
-                            <button type="button" class="btn btn-secondary me-2" id="btn_v4"><i
-                                    class="fa-solid fa-angle-left me-2"></i>Anterior</button>
-                            <button type="submit" class="btn btn-primary" id="btn_add_encomenda"><i
-                                    class="fa-solid fa-floppy-disk me-2"></i>Finalizar</button>
+                            <div class="col_btns col-12 d-flex justify-content-end align-items-end mt-2">
+                                <button type="button" class="btn btn-secondary me-2" id="btn_v4"><i
+                                        class="fa-solid fa-angle-left me-2"></i>Anterior</button>
+                                <button type="button" class="btn btn-primary" id="btn_add_encomenda"><i
+                                        class="fa-solid fa-floppy-disk me-2"></i>Finalizar</button>
+                            </div>
+
                         </div>
 
+
                     </div>
-
-
-                </div>
 
 
             </form>
@@ -274,7 +281,6 @@
     </div>
 
     <script>
-
         $(document).ready(function() {
 
             $('#cliente').on('change', function() {
@@ -295,7 +301,8 @@
                                 spOptions);
                             $('#email').val(data.cliente.email);
                             $('#tp_doc').val(data.cliente.tp_documento).change();
-                            $('#documento').val(data.cliente.documento).mask(cpfCnpj, cpfOptions) ;
+                            $('#documento').val(data.cliente.documento).mask(cpfCnpj,
+                                cpfOptions);
 
 
 
@@ -322,7 +329,8 @@
                                 SPMaskBehavior,
                                 spOptions);
                             $('#tp_doc_destinatario').val(data.cliente.tp_documento).change();
-                            $('#documento_destinatario').val(data.cliente.documento).mask(cpfCnpj, cpfOptions);
+                            $('#documento_destinatario').val(data.cliente.documento).mask(
+                                cpfCnpj, cpfOptions);
 
 
 
@@ -471,16 +479,16 @@
 
             //passo 5 - validando inputs de pagamento
             $('#btn_add_encomenda').prop('disabled', true);
-            $('body').on('change', '#forma_pagamento, #valor_pago, #tp_faturamento',
-                function() {
-                    if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '' && $('#tp_faturamento') != '') {
-                        $('#btn_add_encomenda').prop('disabled', false);
-                    } else {
-                        $('#btn_add_encomenda').prop('disabled', true);
-                    }
-                });
+            $('body').on('change', '#forma_pagamento, #valor_pago, #tp_faturamento', function() {
+                if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '' && $(
+                        '#tp_faturamento') != '') {
+                    $('#btn_add_encomenda').prop('disabled', false);
+                } else {
+                    $('#btn_add_encomenda').prop('disabled', true);
+                }
+            });
 
-                var cpfCnpj = function(val) {
+            var cpfCnpj = function(val) {
                     return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0000-00';
                 },
                 cpfOptions = {
@@ -488,6 +496,65 @@
                         field.mask(cpfCnpj.apply({}, arguments), options);
                     }
                 };
+
+
+
+
+            $('#btn_add_encomenda').click(function() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('encomendas.salvar') }}",
+                    data: {
+
+                        "origem": $('#origem').val(),
+                        "nome": $('#nome').val(),
+                        "tp_doc": $('#tp_doc').val(),
+                        "documento": $('#documento').val(),
+                        "telefone": $('#telefone').val(),
+                        "nome_destinatario": $('#nome_destinatario').val(),
+                        "tp_doc_destinatario": $('#tp_doc_destinatario').val(),
+                        "documento_destinatario": $('#documento_destinatario').val(),
+                        "telefone_destinatario": $('#telefone_destinatario').val(),
+                        "destino": $('#destino').val(),
+                        "unidade": $('#unidade').val(),
+                        "descricao_encomenda": $('#descricao_encomenda').val(),
+                        "observacao": $('#observacao').val(),
+                        "quantidade": $('#quantidade').val(),
+                        "forma_pagamento": $('#forma_pagamento').val(),
+                        "valor_pago": $('#valor_pago').val(),
+                        "tp_faturamento": $('#tp_faturamento').val(),
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+                        Swal.fire({
+                            title: data.message,
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Imprimir',
+                            cancelButtonText: 'Fechar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "{{route('encomendas.imprimir', '')}}" + "/" + data.encomenda.id;
+                            }else{
+                                window.location.href = "{{route('encomendas.index')}}";
+                            }
+                        })
+                    },
+                    error: function(data) {
+                        console.log('eero');
+                    }
+                });
+
+
+            });
+
+
+
+
 
 
 

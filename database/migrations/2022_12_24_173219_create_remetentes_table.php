@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('remetentes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_cliente')->nullable();
             $table->string('nome');
+            $table->unsignedBigInteger('id_cliente')->nullable();
+            $table->enum('tp_documento', ['CPF', 'CNPJ'])->default('CPF');
+            $table->string('documento');
             $table->string('email')->nullable();
             $table->string('telefone');
-            $table->string('tp_documento', 3);
-            $table->string('documento');
             $table->foreign('id_cliente')->references('id')->on('clientes');
             $table->timestamps();
         });

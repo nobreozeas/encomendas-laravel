@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('agencias', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('email')->nullable();
-            $table->string('telefone');
-            $table->string('endereco')->nullable();
-            $table->string('cidade')->nullable();
-            $table->string('estado')->nullable();
-            $table->enum('tp_documento', ['CNPJ', 'CPF'])->default('CPF');
-            $table->string('documento');
+            $table->unsignedBigInteger('id_municipio');
+            $table->string('endereco');
+            $table->string('bairro');
+            $table->string('cep');
+            $table->foreign('id_municipio')->references('id')->on('municipios');
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('agencias');
     }
 };
