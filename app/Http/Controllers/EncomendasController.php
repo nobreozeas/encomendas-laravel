@@ -129,6 +129,32 @@ class EncomendasController extends Controller
 
     }
 
+    public function listar(Request $request)
+    {
+        $encomendas = Encomenda::where(function ($query) use ($request){
+           $query->where('id', 'like', '%'.$request->busca.'%')
+                ->orWhere('codigo_rastreio', 'like', '%'.$request->busca.'%')
+                ->orWhere('descricao', 'like', '%'.$request->busca.'%');
+
+        })->select('encomendas.*');
+
+
+
+        $orders = [
+            'id',
+            'descricao',
+            'valor',
+            'id_origem',
+            'id_destino',
+        ];
+
+        $encomendas = $encomendas->orderBy($orders[$request->order[0]['column']], $request->order[0]['dir'])->paginate($request->length, ['*'], 'page', ($request->start / $request->length) + 1)->toArray();
+
+        return ["draw" => $request->draw, "recordsTotal" => (int) $encomendas['to'], "recordsFiltered" => (int) $encomendas['total'], "data" => $encomendas["data"]];
+
+    }
+
+
 
 
 

@@ -21,3 +21,4 @@ Route::get('/encomendas/adicionar', [EncomendasController::class, 'create'])->na
 Route::post('/encomendas/buscar-cliente', [EncomendasController::class, 'buscaCliente'])->name('buscar_cliente');
 Route::post('/encomendas/salvar', [EncomendasController::class, 'store'])->name('encomendas.salvar');
 Route::get('/encomendas/imprimir/{id}', [EncomendasController::class, 'imprimir'])->name('encomendas.imprimir');
+Route::post('/encomendas/listar', [EncomendasController::class, 'listar'])->name('encomendas.listar');
