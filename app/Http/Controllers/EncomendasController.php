@@ -13,14 +13,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Dd;
 use App\Helpers\Helper;
+use App\Models\Agencia;
+use App\Models\CancelamentoEncomenda;
 use PDF;
 
 class EncomendasController extends Controller
 {
+
+
     public function index()
     {
 
-        return view('encomendas.index');
+        $agencias = Agencia::all();
+
+        return view('encomendas.index', compact('agencias'));
     }
 
     public function create()
@@ -125,37 +131,69 @@ class EncomendasController extends Controller
         $pdf = PDF::loadView('encomendas.imprimir', compact('encomenda'));
         PDF::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         return $pdf->setPaper('a4', 'portrait')->stream('comprovante.pdf');
-
-
     }
 
     public function listar(Request $request)
     {
-        $encomendas = Encomenda::where(function ($query) use ($request){
-           $query->where('id', 'like', '%'.$request->busca.'%')
-                ->orWhere('codigo_rastreio', 'like', '%'.$request->busca.'%')
-                ->orWhere('descricao', 'like', '%'.$request->busca.'%');
+        $encomendas = Encomenda::where(function ($query) use ($request) {
+            $query->where('id', $request->busca)
+                ->orWhere('codigo_rastreio', $request->busca)
+                ->orWhere('descricao', 'like', '%' . $request->busca . '%');
+        })
+            ->with('hasOrigem')
+            ->with('hasDestino')
+            ->select('encomendas.*');
 
-        })->select('encomendas.*');
-
-
-
+        if ($request->status) {
+            $encomendas->where('status', $request->status);
+        }
+        if ($request->agencia) {
+            $encomendas->where('id_agencia', $request->agencia);
+        }
         $orders = [
             'id',
             'descricao',
             'valor',
             'id_origem',
             'id_destino',
+            'status',
+            ''
+
         ];
 
         $encomendas = $encomendas->orderBy($orders[$request->order[0]['column']], $request->order[0]['dir'])->paginate($request->length, ['*'], 'page', ($request->start / $request->length) + 1)->toArray();
 
         return ["draw" => $request->draw, "recordsTotal" => (int) $encomendas['to'], "recordsFiltered" => (int) $encomendas['total'], "data" => $encomendas["data"]];
-
     }
 
+    public function atualizaStatus(Request $request)
+    {
+        if ($request->motivoCancelamento) {
+            CancelamentoEncomenda::updateOrCreate(
+                ['id_encomenda' => $request->id],
+                [
+                    'id_encomenda' => $request->id,
+                    'motivo' => $request->motivoCancelamento,
+                    'id_usuario' => 1,
+                ]
+            );
 
+            Encomenda::where('id', $request->id)
+                ->update(['status' => $request->status]);
 
+            return response()->json([
+                'message' => 'Status atualizado com sucesso'
+            ], 200);
 
+            return response()->json([
+                'message' => 'Status atualizado com sucesso'
+            ], 200);
+        }
 
+        Encomenda::where('id', $request->id)
+            ->update(['status' => $request->status]);
+        return response()->json([
+            'message' => 'Status atualizado com sucesso'
+        ], 200);
+    }
 }

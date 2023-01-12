@@ -17,6 +17,8 @@ class Agencia extends Model
         'endereco',
         'bairro',
         'cep',
+        'numero',
+        'telefone',
     ];
 
 

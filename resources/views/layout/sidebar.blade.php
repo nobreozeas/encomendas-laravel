@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(Route::is('encomendas.index')) active @endif " href="{{route('encomendas.index')}}">
+                <a class="nav-link @if(Route::is('encomendas.index') or Route::is('encomendas.adicionar')) active @endif " href="{{route('encomendas.index')}}">
                     <div class="row">
                         <div class="col-2">
                             <i class="icons_dash fa-solid fa-box-open"></i>
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link @if(Route::is('agencias.index') or Route::is('agencias.adicionar')) active @endif" href="{{route('agencias.index')}}">
                     <div class="row">
                         <div class="col-2">
                             <i class="fa-solid fa-bus"></i>

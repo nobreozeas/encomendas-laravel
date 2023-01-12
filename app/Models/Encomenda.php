@@ -21,5 +21,16 @@ class Encomenda extends Model
         'id_tp_pagamento',
         'id_tp_faturamento',
         'codigo_rastreio',
+        'id_agencia'
     ];
+
+    public function hasOrigem()
+    {
+        return $this->hasOne(Municipio::class, 'id', 'id_origem');
+    }
+
+    public function hasDestino()
+    {
+        return $this->hasOne(Municipio::class, 'id', 'id_destino');
+    }
 }
