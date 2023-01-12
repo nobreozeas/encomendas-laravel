@@ -1,0 +1,260 @@
+/*==================== LOGIN ====================*/
+.container {
+    height: 100vh !important;
+    background: linear-gradient(191deg, #020024 0, #6cb3f5 0, #84c2fb 100%);
+}
+.login_box {
+    min-width: 70%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 20px;
+}
+.login_img {
+    height: 100%;
+    padding-left: 10px;
+    background-color: #DCECFC;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.login {
+    height: 100%;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    color: #606368;
+}
+
+.formulario {
+    padding-top: 20px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.label-form{
+    font-weight: 500;
+    color: #606368;
+}
+
+@media only screen and (max-width: 1400px) {
+    .container {
+        max-width: 100% !important;
+    }
+}
+
+/*==================== MENU - DASHBOARD ====================*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
+  right: 0;
+  */
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+
+}
+
+#botao_logout {
+    display: block;
+}
+
+@media screen and (max-width: 767.98px) {
+    #botao_logout {
+        margin-right: 50px;
+    }
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    margin-bottom: 15px;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+}
+
+
+.sidebar .nav-link.active {
+    color: #fff;
+    font-weight: 600;
+    background-color: #4e73df !important;
+
+}
+
+
+.sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+    color: #fff;
+    font-weight: 600;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 20px;
+    background-color: #4e73df;
+}
+.navbar-brand:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav_top {
+    background-color: #4e73df;
+}
+
+.navbar .navbar-toggler {
+    border: 0.5px solid #fff;
+    top: 1.25rem;
+    right: 1rem;
+    color: #fff;
+}
+.navbar .navbar-toggler:focus {
+    box-shadow: none;
+    border: 2px solid #fff;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+#sidebarMenu{
+    background-color: #07112c  !important;
+}
+
+.icons_dash{
+    font-size: 18px;
+}
+
+.box_form{
+    height: 100%;
+    background: #fff;
+    box-shadow: 8px 1px 8px 2px #ccc;
+    padding: 10px;
+    border-left: #4e73df 5px solid;
+    border-radius: 8px;
+    margin-left: 6px;
+}
+.fase_form{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.fase_form i{
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 25px;
+    color: #fff;
+}
+#ip1{
+    margin-left: 14px;
+}
+#ip4{
+    margin-left: 11px;
+}
+
+.ps {
+    margin-top: 14px;
+    width: 200px;
+    height: 4px;
+    background-color: gray;
+
+}
+
+.circle{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-top: -10px;
+
+}
+
+.circle.active{
+    background-color: #4e73df;
+    color: #fff;
+}
+
+.circle.active i{
+    color: #fff;
+}
+
+/*==================== ENCOMENDAS ====================*/
+
+.table>:not(caption)>*>* {
+    padding: .5rem .5rem;
+    background-color: var(--bs-table-bg);
+    border-bottom-width: 0px;
+    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+}
+
+.table thead th {
+    color: #464E5F !important;
+    font-weight: 500 !important;
+}
+
+.status {
+    height: 35px;
+    width: 100px;
+    margin: 0 auto;
+    font-size: 14px !important;
+}
+
+#limpa_filtro {
+    background-color: #4e73df;
+    color: #fff;
+}
+
+table {
+    font-size: 14px !important;
+
+}
+
+#tabela_encomenda_wrapper {
+    margin-bottom: 50px;
+}
+
+#tabela_encomenda {
+    width: 100% !important;
+}
+
+.btn_mais_acoes {
+    background-color: #4e73df !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    width: 40px;
+    height: 40px;
+    padding: 5px 10px !important;
+    z-index: 9999 !important;
+    /* font-size: 14px !important; */
+    /* font-weight: 500 !important; */
+    /* margin: 0 5px !important; */
+}
+
+.dropdown_menu_acoes li a {
+    color: rgb(105, 105, 105) !important;
+}
+
+.dropdown_menu_acoes li a:hover {
+    background-color: #4e73df !important;
+    color: #fff !important;
+}
+

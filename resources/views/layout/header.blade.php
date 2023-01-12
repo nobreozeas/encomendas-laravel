@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,24 +12,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}" />
     <link rel="stylesheet" href="{{asset('assets/css/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap5.min.css')}}">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     @stack('styles')
-    <script src="{{ asset('assets/js/jquery-3.6.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/chart.js') }}"></script>
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{asset('assets/js/jquery.mask.js')}}"></script>
-    <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
-    <script src="{{asset('assets/js/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/js/dataTables.bootstrap5.min.js')}}"></script>
-    @stack('scripts')
 
-    <script>
-        $.ajaxSetup({
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       }
-   });
-    </script>
 
     <style>
         .bd-placeholder-img {
@@ -47,8 +31,5 @@
             }
         }
     </style>
-    <link href="{{ asset('assets/css/dashboard.css') }}" rel="stylesheet">
-    @stack('styles')
 </head>
-
 <body>

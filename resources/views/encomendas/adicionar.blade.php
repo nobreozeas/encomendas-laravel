@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="col mt-3">
-            <form class="row g-3">
+            <form class="row g-3" id="form_encomenda">
                 <div id="input_cliente" class="box_form">
 
                     <div class="col-12 mb-3">
@@ -280,289 +280,253 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-
-            $('#cliente').on('change', function() {
-
-                if ($('#cliente').val() != '') {
-                    var cliente = $('#cliente').val();
-                    $.ajax({
-                        url: "{{ route('buscar_cliente') }}",
-                        type: 'POST',
-                        data: {
-                            cliente: cliente
-                        },
-                        success: function(data) {
-                            console.log(data);
-
-                            $('#nome').val(data.cliente.nome);
-                            $('#telefone').val(data.cliente.telefone).mask(SPMaskBehavior,
-                                spOptions);
-                            $('#email').val(data.cliente.email);
-                            $('#tp_doc').val(data.cliente.tp_documento).change();
-                            $('#documento').val(data.cliente.documento).mask(cpfCnpj,
-                                cpfOptions);
 
 
-
-                        }
-                    });
-                }
-            });
-
-            $('#cliente2').on('change', function() {
-
-                if ($('#cliente2').val() != '') {
-                    var cliente = $('#cliente').val();
-                    $.ajax({
-                        url: "{{ route('buscar_cliente') }}",
-                        type: 'POST',
-                        data: {
-                            cliente: cliente
-                        },
-                        success: function(data) {
-                            console.log(data);
-
-                            $('#nome_destinatario').val(data.cliente.nome);
-                            $('#telefone_destinatario').val(data.cliente.telefone).mask(
-                                SPMaskBehavior,
-                                spOptions);
-                            $('#tp_doc_destinatario').val(data.cliente.tp_documento).change();
-                            $('#documento_destinatario').val(data.cliente.documento).mask(
-                                cpfCnpj, cpfOptions);
-
-
-
-                        }
-                    });
-                }
-            });
-
-
-            //ocultando inputs
-            $('#input_destinatario').hide();
-            $('#input_encomenda').hide();
-            $('#input_frete').hide();
-            //passo 1 - configurando botoes de proximo
-            $('#btn_p1').click(function() {
-                $('#p1').css('background-color', '#4e73df')
-                $('#circle2').addClass('active');
-                $('#input_cliente').hide();
-                $('#input_destinatario').show();
-
-            });
-            $('#btn_p2').click(function() {
-                $('#p2').css('background-color', '#4e73df')
-                $('#circle3').addClass('active');
-                $('#input_destinatario').hide();
-                $('#input_encomenda').show();
-            });
-            $('#btn_p3').click(function() {
-                $('#p3').css('background-color', '#4e73df')
-                $('#circle4').addClass('active');
-                $('#input_encomenda').hide();
-                $('#input_frete').show();
-            });
-
-            //passo 2 - configurando botoes de voltar
-            $('#btn_v2').click(function() {
-                $('#p1').css('background-color', '#808080')
-                $('#circle2').removeClass('active');
-                $('#input_destinatario').hide();
-                $('#input_cliente').show();
-            });
-            $('#btn_v3').click(function() {
-                $('#p2').css('background-color', '#808080')
-                $('#circle3').removeClass('active');
-                $('#input_encomenda').hide();
-                $('#input_destinatario').show();
-            });
-            $('#btn_v4').click(function() {
-                $('#p3').css('background-color', '#808080')
-                $('#circle4').removeClass('active');
-                $('#input_frete').hide();
-                $('#input_encomenda').show();
-            });
-
-            $('body').on('change', '#origem, #nome, #tp_doc, #documento, #telefone', function() {
-
-                if ($('#nome').val() != '' && $('#tp_doc').val() != '' && $('#documento')
-                    .val() != '' && $('#telefone').val() != '' && $('#origem').val() != ''
-                ) {
-                    $('#btn_p1').prop('disabled', false);
-
-
-                } else {
-                    $('#btn_p1').prop('disabled', true);
-                }
-            });
-
-            $('#btn_add_encomenda').show()
-            $('.origem').show();
-            $('#btn_p1').show();
-            $('#btn_p1').prop('disabled', true);
-            $('#cliente').val('').change();
-            $('#origem').val('').change();
-
-
-
-            var SPMaskBehavior = function(val) {
-                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-                },
-                spOptions = {
-                    onKeyPress: function(val, e, field, options) {
-                        field.mask(SPMaskBehavior.apply({}, arguments), options);
-                    }
-                };
-            $('#telefone, #telefone_destinatario').mask(SPMaskBehavior, spOptions);
-            $('#valor_pago').mask(
-                '#.##0,00', {
-                    reverse: true
-                });
-            $('.select-2, #origem, #destino, #unidade, #forma_pagamento, #tp_faturamento').select2({
-                language: "pt-BR",
-                theme: "bootstrap-5"
-            });
-
-            $('#tp_doc').on('change', function() {
-                if (this.value == 'CPF') {
-                    $('#documento').mask('000.000.000-00', {
-                        reverse: true
-                    });
-                } else if (this.value == 'CNPJ') {
-                    $('#documento').mask('00.000.000/0000-00', {
-                        reverse: true
-                    });
-                }
-            });
-
-            $('#tp_doc_destinatario').on('change', function() {
-                if (this.value == 'CPF') {
-                    $('#documento_destinatario').mask('000.000.000-00', {
-                        reverse: true
-                    });
-                } else if (this.value == 'CNPJ') {
-                    $('#documento_destinatario').mask('00.000.000/0000-00', {
-                        reverse: true
-                    });
-                }
-            });
-
-            //passo 3 - validando inputs de destinatario
-            $('#btn_p2').prop('disabled', true);
-            $('body').on('change',
-                '#nome_destinatario, #tp_doc_destinatario, #documento_destinatario, #telefone_destinatario, #destino',
-                function() {
-                    if ($('#nome_destinatario').val() != '' && $('#tp_doc_destinatario').val() != '' && $(
-                            '#documento_destinatario').val() != '' && $('#telefone_destinatario').val() != '' &&
-                        $(
-                            '#destino').val() != '') {
-                        $('#btn_p2').prop('disabled', false);
-                    } else {
-                        $('#btn_p2').prop('disabled', true);
-                    }
-                });
-
-            //passo 4 - validando inputs de encomenda
-            $('#btn_p3').prop('disabled', true);
-            $('body').on('change', '#unidade, #descricao_encomenda, #quantidade',
-                function() {
-                    if ($('#unidade').val() != '' && $('#descricao_encomenda').val() != '' && $('#quantidade')
-                        .val() !=
-                        '') {
-                        $('#btn_p3').prop('disabled', false);
-                    } else {
-                        $('#btn_p3').prop('disabled', true);
-                    }
-                });
-
-            //passo 5 - validando inputs de pagamento
-            $('#btn_add_encomenda').prop('disabled', true);
-            $('body').on('change', '#forma_pagamento, #valor_pago, #tp_faturamento', function() {
-                if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '' && $(
-                        '#tp_faturamento') != '') {
-                    $('#btn_add_encomenda').prop('disabled', false);
-                } else {
-                    $('#btn_add_encomenda').prop('disabled', true);
-                }
-            });
-
-            var cpfCnpj = function(val) {
-                    return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0000-00';
-                },
-                cpfOptions = {
-                    onKeyPress: function(val, e, field, options) {
-                        field.mask(cpfCnpj.apply({}, arguments), options);
-                    }
-                };
-
-
-
-
-            $('#btn_add_encomenda').click(function() {
-
+@endsection
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#cliente').on('change', function() {
+            if ($('#cliente').val() != '') {
+                var cliente = $('#cliente').val();
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('encomendas.salvar') }}",
+                    url: "{{ route('buscar_cliente') }}",
+                    type: 'POST',
                     data: {
-
-                        "origem": $('#origem').val(),
-                        "nome": $('#nome').val(),
-                        "tp_doc": $('#tp_doc').val(),
-                        "documento": $('#documento').val(),
-                        "telefone": $('#telefone').val(),
-                        "nome_destinatario": $('#nome_destinatario').val(),
-                        "tp_doc_destinatario": $('#tp_doc_destinatario').val(),
-                        "documento_destinatario": $('#documento_destinatario').val(),
-                        "telefone_destinatario": $('#telefone_destinatario').val(),
-                        "destino": $('#destino').val(),
-                        "unidade": $('#unidade').val(),
-                        "descricao_encomenda": $('#descricao_encomenda').val(),
-                        "observacao": $('#observacao').val(),
-                        "quantidade": $('#quantidade').val(),
-                        "forma_pagamento": $('#forma_pagamento').val(),
-                        "valor_pago": $('#valor_pago').val(),
-                        "tp_faturamento": $('#tp_faturamento').val(),
+                        cliente: cliente
                     },
                     success: function(data) {
                         console.log(data);
 
-                        Swal.fire({
-                            title: data.message,
-                            icon: 'success',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Imprimir',
-                            cancelButtonText: 'Fechar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = "{{route('encomendas.imprimir', '')}}" + "/" + data.encomenda.id;
-                            }else{
-                                window.location.href = "{{route('encomendas.index')}}";
-                            }
-                        })
-                    },
-                    error: function(data) {
-                        console.log('eero');
+                        $('#nome').val(data.cliente.nome);
+                        $('#telefone').val(data.cliente.telefone).mask(SPMaskBehavior,
+                            spOptions);
+                        $('#email').val(data.cliente.email);
+                        $('#tp_doc').val(data.cliente.tp_documento).change();
+                        $('#documento').val(data.cliente.documento).mask(cpfCnpj, cpfOptions);
                     }
                 });
+            }
+        });
 
+        $('#cliente2').on('change', function() {
+            if ($('#cliente2').val() != '') {
+                var cliente = $('#cliente').val();
+                $.ajax({
+                    url: "{{ route('buscar_cliente') }}",
+                    type: 'POST',
+                    data: {
+                        cliente: cliente
+                    },
+                    success: function(data) {
+                        console.log(data);
 
-            });
-
-
-
-
-
-
-
-
-
-
+                        $('#nome_destinatario').val(data.cliente.nome);
+                        $('#telefone_destinatario').val(data.cliente.telefone).mask(
+                            SPMaskBehavior,
+                            spOptions);
+                        $('#tp_doc_destinatario').val(data.cliente.tp_documento).change();
+                        $('#documento_destinatario').val(data.cliente.documento).mask(cpfCnpj, cpfOptions);
+                    }
+                });
+            }
+        });
+        //ocultando inputs
+        $('#input_destinatario').hide();
+        $('#input_encomenda').hide();
+        $('#input_frete').hide();
+        //passo 1 - configurando botoes de proximo
+        $('#btn_p1').click(function() {
+            $('#p1').css('background-color', '#4e73df')
+            $('#circle2').addClass('active');
+            $('#input_cliente').hide();
+            $('#input_destinatario').show();
 
         });
-    </script>
+        $('#btn_p2').click(function() {
+            $('#p2').css('background-color', '#4e73df')
+            $('#circle3').addClass('active');
+            $('#input_destinatario').hide();
+            $('#input_encomenda').show();
+        });
+        $('#btn_p3').click(function() {
+            $('#p3').css('background-color', '#4e73df')
+            $('#circle4').addClass('active');
+            $('#input_encomenda').hide();
+            $('#input_frete').show();
+        });
+        //passo 2 - configurando botoes de voltar
+        $('#btn_v2').click(function() {
+            $('#p1').css('background-color', '#808080')
+            $('#circle2').removeClass('active');
+            $('#input_destinatario').hide();
+            $('#input_cliente').show();
+        });
+        $('#btn_v3').click(function() {
+            $('#p2').css('background-color', '#808080')
+            $('#circle3').removeClass('active');
+            $('#input_encomenda').hide();
+            $('#input_destinatario').show();
+        });
+        $('#btn_v4').click(function() {
+            $('#p3').css('background-color', '#808080')
+            $('#circle4').removeClass('active');
+            $('#input_frete').hide();
+            $('#input_encomenda').show();
+        });
 
-@endsection
+        $('body').on('change', '#origem, #nome, #tp_doc, #documento, #telefone', function() {
+            if ($('#nome').val() != '' && $('#tp_doc').val() != '' && $('#documento')
+                .val() != '' && $('#telefone').val() != '' && $('#origem').val() != ''
+            ) {
+                $('#btn_p1').prop('disabled', false);
+            } else {
+                $('#btn_p1').prop('disabled', true);
+            }
+        });
+        $('#btn_add_encomenda').show()
+        $('.origem').show();
+        $('#btn_p1').show();
+        $('#btn_p1').prop('disabled', true);
+        $('#cliente').val('').change();
+        $('#origem').val('').change();
+        var SPMaskBehavior = function(val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+        $('#telefone, #telefone_destinatario').mask(SPMaskBehavior, spOptions);
+        $('#valor_pago').mask('#.##0,00', { reverse: true });
+        $('.select-2, #origem, #destino, #unidade, #forma_pagamento, #tp_faturamento').select2({
+            language: "pt-BR",
+            theme: "bootstrap-5"
+        });
+
+        $('#tp_doc').on('change', function() {
+            if (this.value == 'CPF') {
+                $('#documento').mask('000.000.000-00', {
+                    reverse: true
+                });
+            } else if (this.value == 'CNPJ') {
+                $('#documento').mask('00.000.000/0000-00', {
+                    reverse: true
+                });
+            }
+        });
+
+        $('#tp_doc_destinatario').on('change', function() {
+            if (this.value == 'CPF') {
+                $('#documento_destinatario').mask('000.000.000-00', {
+                    reverse: true
+                });
+            } else if (this.value == 'CNPJ') {
+                $('#documento_destinatario').mask('00.000.000/0000-00', {
+                    reverse: true
+                });
+            }
+        });
+
+        //passo 3 - validando inputs de destinatario
+        $('#btn_p2').prop('disabled', true);
+        $('body').on('change',
+            '#nome_destinatario, #tp_doc_destinatario, #documento_destinatario, #telefone_destinatario, #destino',
+            function() {
+                if ($('#nome_destinatario').val() != '' && $('#tp_doc_destinatario').val() != '' && $(
+                        '#documento_destinatario').val() != '' && $('#telefone_destinatario').val() != '' &&
+                    $(
+                        '#destino').val() != '') {
+                    $('#btn_p2').prop('disabled', false);
+                } else {
+                    $('#btn_p2').prop('disabled', true);
+                }
+            });
+
+        //passo 4 - validando inputs de encomenda
+        $('#btn_p3').prop('disabled', true);
+        $('body').on('change', '#unidade, #descricao_encomenda, #quantidade',
+            function() {
+                if ($('#unidade').val() != '' && $('#descricao_encomenda').val() != '' && $('#quantidade')
+                    .val() !=
+                    '') {
+                    $('#btn_p3').prop('disabled', false);
+                } else {
+                    $('#btn_p3').prop('disabled', true);
+                }
+            });
+
+        //passo 5 - validando inputs de pagamento
+        $('#btn_add_encomenda').prop('disabled', true);
+        $('body').on('change', '#forma_pagamento, #valor_pago, #tp_faturamento', function() {
+            if ($('#forma_pagamento').val() != '' && $('#valor_pago').val() != '' && $(
+                    '#tp_faturamento') != '') {
+                $('#btn_add_encomenda').prop('disabled', false);
+            } else {
+                $('#btn_add_encomenda').prop('disabled', true);
+            }
+        });
+
+        var cpfCnpj = function(val) {
+            return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0000-00';
+        },
+        cpfOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(cpfCnpj.apply({}, arguments), options);
+            }
+        };
+
+        $('#btn_add_encomenda').click(function() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('encomendas.salvar') }}",
+                data: {
+
+                    "origem": $('#origem').val(),
+                    "nome": $('#nome').val(),
+                    "tp_doc": $('#tp_doc').val(),
+                    "documento": $('#documento').val(),
+                    "telefone": $('#telefone').val(),
+                    "nome_destinatario": $('#nome_destinatario').val(),
+                    "tp_doc_destinatario": $('#tp_doc_destinatario').val(),
+                    "documento_destinatario": $('#documento_destinatario').val(),
+                    "telefone_destinatario": $('#telefone_destinatario').val(),
+                    "destino": $('#destino').val(),
+                    "unidade": $('#unidade').val(),
+                    "descricao_encomenda": $('#descricao_encomenda').val(),
+                    "observacao": $('#observacao').val(),
+                    "quantidade": $('#quantidade').val(),
+                    "forma_pagamento": $('#forma_pagamento').val(),
+                    "valor_pago": $('#valor_pago').val(),
+                    "tp_faturamento": $('#tp_faturamento').val(),
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#form_encomenda').trigger("reset");
+
+                    Swal.fire({
+                        title: data.message,
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Imprimir',
+                        cancelButtonText: 'Fechar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            window.location.href = "{{route('encomendas.imprimir', '')}}" + "/" + data.encomenda.id;
+                        }else{
+                            window.location.href = "{{route('encomendas.index')}}";
+                        }
+                    })
+                },
+                error: function(data) {
+                    console.log('eero');
+                }
+            });
+        });
+    });
+</script>
+@endpush
