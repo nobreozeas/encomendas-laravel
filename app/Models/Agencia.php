@@ -21,5 +21,10 @@ class Agencia extends Model
         'telefone',
     ];
 
+    public function hasMunicipio()
+    {
+        return $this->belongsTo(Municipio::class, 'id_municipio');
+    }
+
 
 }
