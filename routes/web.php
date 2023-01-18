@@ -60,6 +60,7 @@ Route::prefix('clientes')->group(function () {
     Route::get('/adicionar', [ClienteController::class, 'create'])->name('clientes.adicionar');
     Route::post('/salvar', [ClienteController::class, 'store'])->name('clientes.salvar');
     Route::post('/listar', [ClienteController::class, 'listar'])->name('clientes.listar');
+    Route::post('/verifica-cpf', [ClienteController::class, 'verificaCpf'])->name('clientes.verifica_cpf');
 });
 
 

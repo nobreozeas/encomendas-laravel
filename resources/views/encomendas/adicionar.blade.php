@@ -286,14 +286,15 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#cliente').on('change', function() {
-            if ($('#cliente').val() != '') {
-                var cliente = $('#cliente').val();
+        $('body').on('change', '[name=cliente]', function() {
+            console.log($(this).val());
+            if ($(this).val() != '') {
+
                 $.ajax({
                     url: "{{ route('buscar_cliente') }}",
                     type: 'POST',
                     data: {
-                        cliente: cliente
+                        cliente: $(this).val()
                     },
                     success: function(data) {
                         console.log(data);
@@ -309,14 +310,13 @@
             }
         });
 
-        $('#cliente2').on('change', function() {
-            if ($('#cliente2').val() != '') {
-                var cliente = $('#cliente').val();
+        $('body').on('change', '#cliente2', function() {
+            if ($(this).val() != '') {
                 $.ajax({
                     url: "{{ route('buscar_cliente') }}",
                     type: 'POST',
                     data: {
-                        cliente: cliente
+                        cliente: $(this).val()
                     },
                     success: function(data) {
                         console.log(data);
