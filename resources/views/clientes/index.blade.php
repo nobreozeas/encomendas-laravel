@@ -1,10 +1,13 @@
 @extends('layout.app')
-
-
+@section('title', 'Clientes')
+@section('titulo_pagina', 'Clientes')
 @section('content')
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Agências</h1>
-        <a href="{{ route('agencias.adicionar') }}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
+        <h1 class="h2">Clientes</h1>
+        <a href="{{ route('clientes.adicionar') }}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
+
+
     </div>
 
     <div class="col-md-4">
@@ -16,14 +19,18 @@
         </div>
 
     </div>
+
     <div>
-        <table class="table table-striped table-hover" id="tabela_agencia">
+        <table class="table table-striped table-hover" id="tabela_cliente">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Tipo Documento</th>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Município</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -32,12 +39,13 @@
             </tbody>
         </table>
     </div>
+
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            var tabela = $('#tabela_agencia').DataTable({
+            var tabela = $('#tabela_cliente').DataTable({
                 "searching": false,
                 "width": "100%",
                 "order": [0, "DESC"],
@@ -51,7 +59,7 @@
                 },
                 "pageLength": 50,
                 "ajax": {
-                    url: "{{ route('agencias.listar') }}",
+                    url: "{{ route('clientes.listar') }}",
                     type: "POST",
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -66,7 +74,6 @@
                         className: 'align-middle',
                         render: function(data) {
                             console.log(data);
-
                             return data.id;
                         }
                     }, {
@@ -79,20 +86,60 @@
                         }
                     }, {
                         data: null,
-
+                        orderable: false,
                         className: 'text-center align-middle',
                         render: function(data) {
-                            return data.has_municipio.nome;
+                            return data.telefone;
+
 
 
                         }
                     }, {
                         data: null,
+                        orderable: false,
                         className: 'text-center align-middle',
                         render: function(data) {
-                            return data.has_municipio.uf;
+                            return data.tp_documento;
+
+
+
                         }
                     },
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+                            return data.documento;
+
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+
+
+                            let endereco = data.endereco + ', ' + data.numero + ' - ' + data
+                                .bairro + '.' + data.cep;
+
+                            enderecoCompleto = `<div class="text-truncate" style="max-width:100px;">${endereco}</div>`;
+
+
+
+                            return enderecoCompleto;
+                        }
+                    },
+                    {
+                        data: null,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+
+                            return data.municipio.nome + '/' + data.municipio.uf;
+                        }
+                    },
+
                     {
                         data: null,
                         orderable: false,

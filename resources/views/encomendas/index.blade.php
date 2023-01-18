@@ -186,7 +186,7 @@
                                 .id;
 
                             acoes += `
-                            <div class="dropdown">
+                            <div class="dropdown d-flex justify-content-center">
                                 <a class="dropdown-toggle btn_mais_acoes" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
                                 <ul class="dropdown-menu dropdown_menu_acoes">
                                     <li><a class="dropdown-item" href="#"><i class="fa-solid fa-eye me-2"></i>Visualizar</a></li>
@@ -230,7 +230,8 @@
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
+                        cancelButtonColor: 'gray',
+                        cancelButtonText: 'Fechar',
                         confirmButtonText: 'Sim, cancelar!'
                     }).then(async (result) => {
                         if (result.isConfirmed) {
@@ -251,6 +252,8 @@
                             if (motivoCancelamento) {
                                 atualizaStatus(id, status, motivoCancelamento);
                             }
+                        }else{
+                            tabela.draw();
                         }
                     })
 
