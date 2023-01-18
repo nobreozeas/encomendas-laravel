@@ -25,6 +25,10 @@ class User extends Authenticatable
         'cpf',
         'telefone',
         'id_agencia',
+        'id_permissao',
+        'status',
+        'primeiro_acesso',
+
     ];
 
     /**
@@ -37,12 +41,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
+    public function hasAgencia()
+    {
+        return $this->belongsTo(Agencia::class, 'id_agencia');
+    }
+
+    public function hasPermissao()
+    {
+        return $this->belongsTo(Permissao::class, 'id_permissao');
+    }
 }

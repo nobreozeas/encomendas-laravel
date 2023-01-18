@@ -237,13 +237,15 @@ table {
 }
 
 .btn_mais_acoes {
+    display: flex;
     background-color: #4e73df !important;
     color: #fff !important;
     border-radius: 50% !important;
-    width: 40px;
-    height: 40px;
-    padding: 5px 10px !important;
-    z-index: 9999 !important;
+    width: 30px;
+    height: 30px;
+align-items: center;
+justify-content: center;
+
     /* font-size: 14px !important; */
     /* font-weight: 500 !important; */
     /* margin: 0 5px !important; */
@@ -257,4 +259,8 @@ table {
     background-color: #4e73df !important;
     color: #fff !important;
 }
+
+/*==================== USUARIOS ====================*/
+
+
 

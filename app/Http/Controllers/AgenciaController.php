@@ -14,6 +14,30 @@ class AgenciaController extends Controller
 
         return view('agencias.index');
     }
+
+    public function listar(Request $request)
+    {
+        $agencias = Agencia::where(function($query) use ($request){
+             $query->where('id', $request->busca)
+                ->orWhere('nome', 'like', '%' . $request->busca . '%');
+        })->with('hasMunicipio')
+            ->select('agencias.*');
+        $orders = [
+            'id',
+            'nome',
+            '',
+            '',
+            ''
+        ];
+
+        $agencias = $agencias->orderBy($orders[$request->order[0]['column']], $request->order[0]['dir'])
+            ->paginate($request->length, ['*'], 'page', ($request->start / $request->length) + 1)
+            ->toArray();
+
+        return ["draw" => $request->draw, "recordsTotal" => (int) $agencias['to'], "recordsFiltered" => (int) $agencias['total'], "data" => $agencias["data"]];
+    }
+
+
     public function create()
     {
         $municipios = Municipio::all();
@@ -23,7 +47,7 @@ class AgenciaController extends Controller
     public function store(Request $request)
     {
 
-        try{
+        try {
             DB::beginTransaction();
 
             $agencia = Agencia::create([
@@ -43,17 +67,10 @@ class AgenciaController extends Controller
                 'code' => 200,
 
             ], 200);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
 
             return response()->json($e->getMessage());
         }
-
-
-
-
-
-
-
     }
 }

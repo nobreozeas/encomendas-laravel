@@ -12,15 +12,22 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-       'nome',
-       'tp_documento',
+        'nome',
+        'tp_documento',
         'documento',
         'id_municipio',
         'endereco',
         'bairro',
         'cep',
+        'telefone',
+        'email',
+        'numero'
+
 
     ];
 
-
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'id_municipio');
+    }
 }

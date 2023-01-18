@@ -50,7 +50,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link @if(Route::is('clientes.index') or Route::is('clientes.adicionar')) active  @endif " href="{{route('clientes.index')}}">
                     <div class="row">
                         <div class="col-2">
                             <i class="fa-solid fa-handshake"></i>
@@ -75,7 +75,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link @if(Route::is('usuarios.index') or Route::is('usuarios.adicionar')) active @endif " href="{{route('usuarios.index')}}">
                     <div class="row">
                         <div class="col-2">
                             <i class="fa-solid fa-users"></i>

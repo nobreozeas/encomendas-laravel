@@ -41,7 +41,7 @@ class EncomendasController extends Controller
     public function buscaCliente(Request $request)
     {
 
-        $cliente = Cliente::findOrFail($request->cliente)->first();
+        $cliente = Cliente::where('id',$request->cliente)->first();
 
 
         if (!$cliente) {

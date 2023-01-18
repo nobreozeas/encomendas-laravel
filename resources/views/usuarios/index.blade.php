@@ -1,10 +1,13 @@
 @extends('layout.app')
-
-
+@section('title', 'Usuários')
+@section('titulo_pagina', 'Usuários')
 @section('content')
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Agências</h1>
-        <a href="{{ route('agencias.adicionar') }}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
+        <h1 class="h2">Usuários</h1>
+        <a href="{{ route('usuarios.adicionar') }}" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Adicionar</a>
+
+
     </div>
 
     <div class="col-md-4">
@@ -16,14 +19,18 @@
         </div>
 
     </div>
+
     <div>
-        <table class="table table-striped table-hover" id="tabela_agencia">
+        <table class="table table-striped table-hover" id="tabela_usuario">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">Agência</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -32,12 +39,13 @@
             </tbody>
         </table>
     </div>
+
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            var tabela = $('#tabela_agencia').DataTable({
+            var tabela = $('#tabela_usuario').DataTable({
                 "searching": false,
                 "width": "100%",
                 "order": [0, "DESC"],
@@ -51,7 +59,7 @@
                 },
                 "pageLength": 50,
                 "ajax": {
-                    url: "{{ route('agencias.listar') }}",
+                    url: "{{ route('usuarios.listar') }}",
                     type: "POST",
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -65,8 +73,6 @@
                         "width": "10px",
                         className: 'align-middle',
                         render: function(data) {
-                            console.log(data);
-
                             return data.id;
                         }
                     }, {
@@ -82,7 +88,8 @@
 
                         className: 'text-center align-middle',
                         render: function(data) {
-                            return data.has_municipio.nome;
+                            return data.usuario;
+
 
 
                         }
@@ -90,7 +97,41 @@
                         data: null,
                         className: 'text-center align-middle',
                         render: function(data) {
-                            return data.has_municipio.uf;
+                            let cpf = data.cpf;
+
+                            return cpf;
+
+                        }
+                    },
+                    {
+                        data: null,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+                            return data.has_permissao.descricao
+
+                        }
+                    },
+                    {
+                        data: null,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+
+                            return data.has_agencia.nome;
+                        }
+                    },
+                    {
+                        data: null,
+                        className: 'text-center align-middle',
+                        render: function(data) {
+
+                            let status = '';
+                            if (data.status == 1) {
+                                status = `<span class="badge bg-success">Ativo</span>`;
+                            } else {
+                                status = `<span class="badge bg-danger">Inativo</span>`;
+                            }
+                            return status;
+
                         }
                     },
                     {
